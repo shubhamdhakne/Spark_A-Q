@@ -1,0 +1,14 @@
+'''
+1)consider a file with delimiter ~| how will you load it is spark DataFreame as show  below?
+ KEY NOTE	:- avoid useing sparkContext and sparkSession
+ FILE LIKE :- Name ~| Age
+			shubham,dhakne ~| 28
+			
+ANS:-
+'''			
+ df = spark.read.csv('file_location')	# this is conn't work in spark
+ df = spark.read.text('file_location')
+ header = df.first()[0]
+ schema = header.split('~|')
+ df_input = df.filter(df['value'] != header).rdd.map(lambda x: x[0].split('~|').toDF(schema)
+ df_input.show()
